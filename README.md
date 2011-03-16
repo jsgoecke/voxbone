@@ -3,8 +3,15 @@ Voxbone
 
 Ruby gem for consuming the [Voxbone SOAP API](http://voxbone.com/APIGettingStarted.jsf).
 
+Installation
+------------
+
+	gem install voxbone
+
 Example
 -------
+
+[API Docs](http://jsgoecke.github.com/voxbone)
 
 	require 'rubygems'
 	require 'voxbone'
