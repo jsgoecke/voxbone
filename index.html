@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Documentation by YARD 0.6.4</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Voxbone</h1>
+
+<p>Ruby gem for consuming the <a href="http://voxbone.com/APIGettingStarted.jsf">Voxbone SOAP API</a>.</p>
+
+<h2>Example</h2>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'voxbone'</span>
+<span class='voxbone identifier id'>voxbone</span> <span class='assign token'>=</span> <span class='Voxbone constant id'>Voxbone</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:username</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'test'</span><span class='comma token'>,</span> 
+                      <span class='symbol val'>:password</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'test'</span><span class='rparen token'>)</span>
+<span class='voxbone identifier id'>voxbone</span><span class='dot token'>.</span><span class='get_countries_list identifier id'>get_countries_list</span><span class='lparen token'>(</span><span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'GEOGRAPHIC'</span><span class='rparen token'>)</span>
+</pre>
+
+<p>Returns (using awesome_print gem):</p>
+
+<pre class="code"><span class='lbrace token'>{</span>
+    <span class='symbol val'>:get_countries_list_response</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+        <span class='symbol val'>:array_of_countries</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+            <span class='symbol val'>:country</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span>
+                <span class='lbrack token'>[</span> <span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='lbrace token'>{</span>
+                    <span class='symbol val'>:country_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;ARGENTINA&quot;</span><span class='comma token'>,</span>
+                    <span class='symbol val'>:country_code</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;54&quot;</span><span class='comma token'>,</span>
+                      <span class='symbol val'>:country_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;10&quot;</span><span class='comma token'>,</span>
+                      <span class='symbol val'>:has_states</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='comma token'>,</span>
+                         <span class='symbol val'>:code_a2</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;AR&quot;</span>
+                <span class='rbrace token'>}</span><span class='comma token'>,</span>
+                <span class='lbrack token'>[</span> <span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='lbrace token'>{</span>
+                    <span class='symbol val'>:country_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;AUSTRALIA&quot;</span><span class='comma token'>,</span>
+                    <span class='symbol val'>:country_code</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;61&quot;</span><span class='comma token'>,</span>
+                      <span class='symbol val'>:country_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;13&quot;</span><span class='comma token'>,</span>
+                      <span class='symbol val'>:has_states</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='comma token'>,</span>
+                         <span class='symbol val'>:code_a2</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;AU&quot;</span>
+                <span class='rbrace token'>}</span>   
+            <span class='rbrack token'>]</span>
+        <span class='rbrace token'>}</span><span class='comma token'>,</span>
+    <span class='symbol val'>:xmlns</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://www.voxbone.com/VoxAPI&quot;</span>
+    <span class='rbrace token'>}</span>
+<span class='rbrace token'>}</span>
+</pre>
+
+<h2>Available Methods</h2>
+
+<p>Full details of available methods <a href="http://sourceforge.net/apps/mediawiki/voxbone-client/index.php?title=VoxAPI.Methods">here</a>.</p>
+
+<pre class="code"><span class='lbrack token'>[</span> <span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='symbol val'>:place_order_for_lock</span>
+<span class='lbrack token'>[</span> <span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='symbol val'>:remove_did_from_capacity_group</span>
+<span class='lbrack token'>[</span> <span class='integer val'>2</span><span class='rbrack token'>]</span> <span class='symbol val'>:create_address_for_regulation</span>
+<span class='lbrack token'>[</span> <span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='symbol val'>:configure_dnis</span>
+<span class='lbrack token'>[</span> <span class='integer val'>4</span><span class='rbrack token'>]</span> <span class='symbol val'>:configure_cpc</span>
+<span class='lbrack token'>[</span> <span class='integer val'>5</span><span class='rbrack token'>]</span> <span class='symbol val'>:remove_di_ds_from_trunk</span>
+<span class='lbrack token'>[</span> <span class='integer val'>6</span><span class='rbrack token'>]</span> <span class='symbol val'>:link_dids_to_address</span>
+<span class='lbrack token'>[</span> <span class='integer val'>7</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_purchase_info_data</span>
+<span class='lbrack token'>[</span> <span class='integer val'>8</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_trunk_list</span>
+<span class='lbrack token'>[</span> <span class='integer val'>9</span><span class='rbrack token'>]</span> <span class='symbol val'>:map_did_to_capacity_group</span>
+<span class='lbrack token'>[</span><span class='integer val'>10</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_order_status</span>
+<span class='lbrack token'>[</span><span class='integer val'>11</span><span class='rbrack token'>]</span> <span class='symbol val'>:cancel_did</span>
+<span class='lbrack token'>[</span><span class='integer val'>12</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_regulation_address_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>13</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_did_group_purchase_lock</span>
+<span class='lbrack token'>[</span><span class='integer val'>14</span><span class='rbrack token'>]</span> <span class='symbol val'>:place_di_ds_on_trunk</span>
+<span class='lbrack token'>[</span><span class='integer val'>15</span><span class='rbrack token'>]</span> <span class='symbol val'>:configure_codecs</span>
+<span class='lbrack token'>[</span><span class='integer val'>16</span><span class='rbrack token'>]</span> <span class='symbol val'>:create_capacity_group</span>
+<span class='lbrack token'>[</span><span class='integer val'>17</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_capacity_group_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>18</span><span class='rbrack token'>]</span> <span class='symbol val'>:place_di_ds_order</span>
+<span class='lbrack token'>[</span><span class='integer val'>19</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_di_ds_info</span>
+<span class='lbrack token'>[</span><span class='integer val'>20</span><span class='rbrack token'>]</span> <span class='symbol val'>:map_did</span>
+<span class='lbrack token'>[</span><span class='integer val'>21</span><span class='rbrack token'>]</span> <span class='symbol val'>:delete_capacity_group</span>
+<span class='lbrack token'>[</span><span class='integer val'>22</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_features_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>23</span><span class='rbrack token'>]</span> <span class='symbol val'>:configure_dtmf_mode</span>
+<span class='lbrack token'>[</span><span class='integer val'>24</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_did_group_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>25</span><span class='rbrack token'>]</span> <span class='symbol val'>:is_purchase_info_valid</span>
+<span class='lbrack token'>[</span><span class='integer val'>26</span><span class='rbrack token'>]</span> <span class='symbol val'>:purchase_tollfree_credit</span>
+<span class='lbrack token'>[</span><span class='integer val'>27</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_did_group_pricing</span>
+<span class='lbrack token'>[</span><span class='integer val'>28</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_pop_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>29</span><span class='rbrack token'>]</span> <span class='symbol val'>:request_address_verification</span>
+<span class='lbrack token'>[</span><span class='integer val'>30</span><span class='rbrack token'>]</span> <span class='symbol val'>:limit_did_channels</span>
+<span class='lbrack token'>[</span><span class='integer val'>31</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_states_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>32</span><span class='rbrack token'>]</span> <span class='symbol val'>:configure_t38</span>
+<span class='lbrack token'>[</span><span class='integer val'>33</span><span class='rbrack token'>]</span> <span class='symbol val'>:delete_regulation_address</span>
+<span class='lbrack token'>[</span><span class='integer val'>34</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_countries_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>35</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_did_group_info</span>
+<span class='lbrack token'>[</span><span class='integer val'>36</span><span class='rbrack token'>]</span> <span class='symbol val'>:update_capacity_group</span>
+<span class='lbrack token'>[</span><span class='integer val'>37</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_tollfree_credit_package_list</span>
+<span class='lbrack token'>[</span><span class='integer val'>38</span><span class='rbrack token'>]</span> <span class='symbol val'>:map_did_checking_status</span>
+<span class='lbrack token'>[</span><span class='integer val'>39</span><span class='rbrack token'>]</span> <span class='symbol val'>:update_delivery</span>
+<span class='lbrack token'>[</span><span class='integer val'>40</span><span class='rbrack token'>]</span> <span class='symbol val'>:get_account_balance</span>
+</pre>
+
+<h2>Copyright</h2>
+
+<p>Copyright (c) 2011 Jason Goecke. See LICENSE.txt for
+further details.</p>
+</div></div>
+    
+    <div id="footer">
+  Generated on Wed Mar 16 12:25:49 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.4 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>
