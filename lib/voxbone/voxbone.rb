@@ -40,10 +40,11 @@ class Voxbone
   # @raise NoMethodError if the method requested is not defined in the WSDL
   # @example Retrieve a country list
   #   voxbone.get_countries_list(:type => 'GEOGRAPHIC')
-  def method_missing(method_name, params={})
+  def method_missing(method_name, *args)
     if @methods.include? method_name
+      params = (args.first || {}).merge(@user_token)
       response = @client.request :vox, method_name do
-        prepare_soap(soap, capitalize_params(params))
+        soap.body = capitalize_params(params)
       end
       response.to_hash
     else
@@ -78,19 +79,9 @@ class Voxbone
   # @return [Hash] the user token
   def create_user_token(params)
     key = Time.now.strftime("%Y-%m-%d %H:%M:%S:") + '%012d' % rand(10_000_000_000)
-    { :User_token => { :Username => params[:username],
-                       :Key      => key,
-                       :Hash     => Digest::SHA1.hexdigest(params[:password] + key) } }
-  end
-  
-  ##
-  # Builds the SOAP body for Savon
-  #
-  # 
-  # @param [required, Object] the Savon SOAP object
-  # @param [required, Hash] params used to invoke the SOAP method
-  def prepare_soap(soap, params)
-    soap.body = params.merge(@user_token)
+    { :user_token => { :username => params[:username],
+                       :key      => key,
+                       :hash     => Digest::SHA1.hexdigest(params[:password] + key) } }
   end
   
   ##
@@ -99,8 +90,12 @@ class Voxbone
   # @param [required, Hash] params 
   # @return [Hash] with keys capitalized
   def capitalize_params(params)
-    new_params= {}
-    params.each { |k,v| new_params[k.to_s.capitalize.to_sym] = v }
-    new_params
+    capitalized_params= {}
+    params.each do |key, value|
+      key = key.to_s.split(/[ _]/).map(&:capitalize).join
+      value = (value.is_a?(Hash) ? capitalize_params(value) : value)
+      capitalized_params[key] = value
+    end
+    capitalized_params
   end
 end
