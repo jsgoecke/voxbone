@@ -20,15 +20,9 @@ class Voxbone
     raise ArgumentError, ":username required" if params[:username].nil?
     raise ArgumentError, ":password required" if params[:password].nil?
     
-    config_savon(params)
     @user_token = create_user_token(params)
-    
-    @client = Savon::Client.new do
-      wsdl.document  = params[:base_uri] || 'http://www.voxbone.com/VoxAPI/services/VoxAPI?WSDL'
-      wsdl.namespace = 'http://www.voxbone.com/VoxAPI'
-    end
-    
-    @methods = @client.wsdl.soap_actions
+    @client = savon_client(params)
+    @methods = @client.operations
   end
   
   ##
@@ -43,31 +37,32 @@ class Voxbone
   def method_missing(method_name, *args)
     if @methods.include? method_name
       params = (args.first || {}).merge(@user_token)
-      response = @client.request :vox, method_name do
-        soap.body = capitalize_params(params)
-      end
+      message = { :message => capitalize_params(params) }
+      response = @client.call method_name, message
       response.to_hash
     else
       raise NoMethodError, "The method #{method_name.to_s} does not exist."
     end
   end
   
-  private 
-  
+  private
   ##
-  # Configures Savon
+  # Returns configured Savon client
   #
-  # @param [required, Hash] params 
-  # @option params [optional, String] :log_level to set for Savon
-  def config_savon(params)
-    Savon.configure do |config|
-      if params[:log_level]
-        config.log = true
-        config.log_level = params[:log_level]
-      else
-        config.log = false
-      end
+  # @param [required, Hash] configuration params
+  def savon_client(params)
+    savon_params = {
+      :wsdl => params[:wsdl] || 'http://www.voxbone.com/VoxAPI/services/VoxAPI?WSDL',
+      :namespace => 'http://www.voxbone.com/VoxAPI',
+      :log => false
+    }
+
+    if params[:log_level]
+      savon_params[:log] = true
+      savon_params[:log_level] = params[:log_level]
     end
+
+    Savon.client(savon_params)
   end
   
   ##
