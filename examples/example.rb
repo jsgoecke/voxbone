@@ -2,8 +2,8 @@ require 'rubygems'
 require 'voxbone'
 require 'pp'
 
-voxbone = Voxbone.new(:username   => 'test', 
-                      :password   => 'test',
+voxbone = Voxbone.new(:username   => 'daddy', 
+                      :password   => 'Airlines1!',
                       :wsdl   => 'http://sandbox.voxbone.com/VoxAPI/services/VoxAPI?WSDL',
                       :endpoint => 'http://sandbox.voxbone.com/VoxAPI/services/VoxAPI',
                       :log_level  => :debug)
