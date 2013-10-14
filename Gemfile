@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "savon"
+gem "savon", "~> 2.2.0"
 
 group :development do
   gem "rspec", "~> 2.14.1"
