@@ -87,9 +87,11 @@ class Voxbone
   def capitalize_params(params)
     capitalized_params= {}
     params.each do |key, value|
-      key = key.to_s.split(/[ _]/).map do |part|
-        part.downcase == 'id' ? 'ID' : part.capitalize
-      end.join
+      if key.to_s =~ (/[ _]/))
+        key = key.to_s.split(/[ _]/).map do |part|
+          part.downcase == 'id' ? 'ID' : part.capitalize
+        end.join
+      end
 
       value = (value.is_a?(Hash) ? capitalize_params(value) : value)
       capitalized_params[key] = value
