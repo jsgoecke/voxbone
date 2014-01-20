@@ -1,10 +1,11 @@
 require 'rubygems'
-require 'awesome_print'
-require 'lib/voxbone'
+require 'voxbone'
+require 'pp'
 
-voxbone = Voxbone.new(:username   => 'test', 
-                      :password   => 'test',
-                      :base_uri   => 'http://sandbox.voxbone.com/VoxAPI/services/VoxAPI?wsdl',
+voxbone = Voxbone.new(:username   => 'daddy', 
+                      :password   => 'Airlines1!',
+                      :wsdl   => 'http://sandbox.voxbone.com/VoxAPI/services/VoxAPI?WSDL',
+                      :endpoint => 'http://sandbox.voxbone.com/VoxAPI/services/VoxAPI',
                       :log_level  => :debug)
 
-ap voxbone.get_countries_list(:type => 'GEOGRAPHIC')
+pp voxbone.get_countries_list(:type => 'GEOGRAPHIC')

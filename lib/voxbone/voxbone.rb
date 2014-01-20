@@ -20,15 +20,9 @@ class Voxbone
     raise ArgumentError, ":username required" if params[:username].nil?
     raise ArgumentError, ":password required" if params[:password].nil?
     
-    config_savon(params)
     @user_token = create_user_token(params)
-    
-    @client = Savon::Client.new do
-      wsdl.document  = params[:base_uri] || 'http://www.voxbone.com/VoxAPI/services/VoxAPI?WSDL'
-      wsdl.namespace = 'http://www.voxbone.com/VoxAPI'
-    end
-    
-    @methods = @client.wsdl.soap_actions
+    @client = savon_client(params)
+    @methods = @client.operations
   end
   
   ##
@@ -40,33 +34,35 @@ class Voxbone
   # @raise NoMethodError if the method requested is not defined in the WSDL
   # @example Retrieve a country list
   #   voxbone.get_countries_list(:type => 'GEOGRAPHIC')
-  def method_missing(method_name, params={})
+  def method_missing(method_name, *args)
     if @methods.include? method_name
-      response = @client.request :vox, method_name do
-        prepare_soap(soap, capitalize_params(params))
-      end
+      params = (args.first || {}).merge(@user_token)
+      message = { :message => capitalize_params(params) }
+      response = @client.call method_name, message
       response.to_hash
     else
       raise NoMethodError, "The method #{method_name.to_s} does not exist."
     end
   end
   
-  private 
-  
+  private
   ##
-  # Configures Savon
+  # Returns configured Savon client
   #
-  # @param [required, Hash] params 
-  # @option params [optional, String] :log_level to set for Savon
-  def config_savon(params)
-    Savon.configure do |config|
-      if params[:log_level]
-        config.log = true
-        config.log_level = params[:log_level]
-      else
-        config.log = false
-      end
+  # @param [required, Hash] configuration params
+  def savon_client(params)
+    savon_params = {
+      :wsdl => params[:wsdl] || 'http://www.voxbone.com/VoxAPI/services/VoxAPI?WSDL',
+      :namespace => 'http://www.voxbone.com/VoxAPI',
+      :log => false
+    }
+
+    if params[:log_level]
+      savon_params[:log] = true
+      savon_params[:log_level] = params[:log_level]
     end
+
+    Savon.client(savon_params)
   end
   
   ##
@@ -78,19 +74,9 @@ class Voxbone
   # @return [Hash] the user token
   def create_user_token(params)
     key = Time.now.strftime("%Y-%m-%d %H:%M:%S:") + '%012d' % rand(10_000_000_000)
-    { :User_token => { :Username => params[:username],
-                       :Key      => key,
-                       :Hash     => Digest::SHA1.hexdigest(params[:password] + key) } }
-  end
-  
-  ##
-  # Builds the SOAP body for Savon
-  #
-  # 
-  # @param [required, Object] the Savon SOAP object
-  # @param [required, Hash] params used to invoke the SOAP method
-  def prepare_soap(soap, params)
-    soap.body = params.merge(@user_token)
+    { :user_token => { :username => params[:username],
+                       :key      => key,
+                       :hash     => Digest::SHA1.hexdigest(params[:password] + key) } }
   end
   
   ##
@@ -99,8 +85,17 @@ class Voxbone
   # @param [required, Hash] params 
   # @return [Hash] with keys capitalized
   def capitalize_params(params)
-    new_params= {}
-    params.each { |k,v| new_params[k.to_s.capitalize.to_sym] = v }
-    new_params
+    capitalized_params= {}
+    params.each do |key, value|
+      if (key.is_a?(String) && key =~ (/[ _]/)) || key.is_a?(Symbol)
+        key = key.to_s.split(/[ _]/).map do |part|
+          part.downcase == 'id' ? 'ID' : part.capitalize
+        end.join
+      end
+
+      value = (value.is_a?(Hash) ? capitalize_params(value) : value)
+      capitalized_params[key] = value
+    end
+    capitalized_params
   end
 end
