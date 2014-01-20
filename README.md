@@ -1,6 +1,6 @@
 Voxbone
 =======
-
+[![Build Status](https://drone.io/github.com/jsgoecke/voxbone/status.png)](https://drone.io/github.com/jsgoecke/voxbone/latest)
 Ruby gem for consuming the [Voxbone SOAP API](http://voxbone.com/APIGettingStarted.jsf).
 
 Installation
@@ -12,7 +12,7 @@ Example
 -------
 
 [API Docs](http://jsgoecke.github.com/voxbone)
-
+```ruby
 	require 'rubygems'
 	require 'voxbone'
 	voxbone = Voxbone.new(:username   => 'test', 
@@ -44,7 +44,7 @@ Returns (using awesome_print gem):
 	    :xmlns => "http://www.voxbone.com/VoxAPI"
 	    }
 	}
-
+```
 Available Methods
 -----------------
 
@@ -95,5 +95,5 @@ Full details of available methods [here](http://sourceforge.net/apps/mediawiki/v
 Copyright
 ---------
 
-Copyright (c) 2011 Jason Goecke. See LICENSE.txt for
+Copyright (c) 2014 Jason Goecke. See LICENSE.txt for
 further details.
