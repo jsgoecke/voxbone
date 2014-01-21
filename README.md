@@ -19,9 +19,9 @@ Example
 	voxbone = Voxbone.new(:username   => 'test', 
 	                      :password   => 'test')
 	voxbone.get_countries_list(:type => 'GEOGRAPHIC')
-
+```
 Returns (using awesome_print gem):
-
+```json
 	{
 	    :get_countries_list_response => {
 	        :array_of_countries => {
