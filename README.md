@@ -1,6 +1,7 @@
 Voxbone
 =======
 [![Build Status](https://drone.io/github.com/jsgoecke/voxbone/status.png)](https://drone.io/github.com/jsgoecke/voxbone/latest)
+
 Ruby gem for consuming the [Voxbone SOAP API](http://voxbone.com/APIGettingStarted.jsf).
 
 Installation
