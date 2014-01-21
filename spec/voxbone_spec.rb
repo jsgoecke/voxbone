@@ -23,16 +23,19 @@ describe "Voxbone" do
   end
   
   it "should get the trunk list" do
+    pending 'Voxbone sandbox no longer allows testing this'
     trunks = @voxbone.get_trunk_list
     trunks[:get_trunk_list_response].nil?.should == false
   end
   
   it "should return a list of countries based on geography" do
+    pending 'Voxbone sandbox no longer allows testing this'
     countries = @voxbone.get_countries_list(:type => 'GEOGRAPHIC')
     countries[:get_countries_list_response][:array_of_countries][:country].nil?.should == false
   end
   
   it "should create a capacity group" do
+    pending 'Voxbone sandbox no longer allows testing this'
     result = @voxbone.create_capacity_group(:name_capacity_group => 'Foobar', :capacity => '100')
     result[:create_capacity_group_response][:capacity_group][:name].should == 'Foobar'
   end
